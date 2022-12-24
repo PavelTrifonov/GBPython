@@ -7,30 +7,56 @@ def f_poly(k):
     from random import randint as rd
     polynom=""
     while k!=0:
-        koef=rd(-100,100)
-        if len(polynom)==0:
+        koef=rd(-10,10)
+        if len(polynom)==0 and abs(koef)!=1 and koef!=0:
             polynom+=str(koef)+"*x**"+str(k)
             k-=1
             continue
+        if len(polynom)==0 and abs(koef)==1 and koef!=0:
+            if koef<0:
+                polynom+="-"+"x**"+str(k)
+                k-=1
+                continue
+            else:
+                polynom+="x**"+str(k)
+                k-=1
+                continue
         if k==1:
             if koef!=0 and koef<0:
-                polynom+=" - "+str(abs(koef))+"*x"
-                k-=1
+                if abs(koef)!=1:
+                    polynom+=" - "+str(abs(koef))+"*x"
+                    k-=1
+                else:
+                    polynom+=" - "+"x"
+                    k-=1  
             elif koef!=0 and koef>0:
-                polynom+=" + "+str(koef)+"*x"
-                k-=1
+                if abs(koef)!=1:
+                    polynom+=" + "+str(koef)+"*x"
+                    k-=1
+                else:
+                    polynom+=" + "+"x"
+                    k-=1  
             continue
         if koef!=0 and koef<0:
-            polynom+=" - "+str(abs(koef))+"*x**"+str(k)
-            k-=1
+            if abs(koef)!=1:
+                polynom+=" - "+str(abs(koef))+"*x**"+str(k)
+                k-=1
+            else:
+                polynom+=" - "+"x**"+str(k)
+                k-=1  
         elif koef!=0 and koef>0:
-            polynom+=" + "+str(koef)+"*x**"+str(k)
-            k-=1
+            if abs(koef)!=1:
+                polynom+=" + "+str(koef)+"*x**"+str(k)
+                k-=1
+            else:
+                polynom+=" + "+"x**"+str(k)
+                k-=1 
         else:
             k-=1
+    koef=rd(-10,10)
     if koef!=0 and koef<0:
         polynom+=" - "+str(abs(koef))
-    else:
+    elif koef!=0 and koef>0:
         polynom+=" + "+str(koef)
     polynom+=" = 0 "
     print(polynom)
