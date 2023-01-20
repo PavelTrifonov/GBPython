@@ -1,37 +1,5 @@
 # Создайте программу для игры в 'Крестики-нолики'
 # НЕОБЯЗАТЕЛЬНО Добавить игру против бота с интеллектом
-# def pole():
-#     global list_pole
-#     list_pole = list(" . " for i in range(3))
-#     list_pole = list(list_pole for i in range(3))
-#     return list_pole
-
-
-# pole()
-
-
-# def print_pole():
-#     for i in list_pole:
-#         for j in i:
-#             print(j, end="")
-#         print("")
-
-
-# print_pole()
-
-
-# def step_in_pole():
-#     x, y = input("В какую строчку и в какой столбец поставим Х?").split()
-#     x = int(x)
-#     y = int(y)
-#     print(x, y)
-#     list_pole[1][1]="x"
-#     return list_pole
-
-# list_pole[1][2]="o"
-# step_in_pole()
-# print_pole()
-# print(list_pole)
 import random
 pole = {}
 for i in range(1, 4):
@@ -39,7 +7,6 @@ for i in range(1, 4):
     while j < 4:
         pole[str(i)+","+str(j)] = "  .  "
         j += 1
-
 
 def print_pole():
     for k in pole:
@@ -49,18 +16,16 @@ def print_pole():
             print(pole[k])
             print("")
 
-
-# print_pole()
 list_x = []
 list_o = []
-
 
 def play1():
     global k_x, l_x, x_x
     k_x, l_x, x_x = 0, 0, 0
     my_step_x = 0
     while pole.get(my_step_x) != "  .  ":
-        my_step_x = input("Через запятую введите сторку и колонку, куда поставить х: ")
+        my_step_x = input(
+            "Через запятую введите сторку и колонку, куда поставить х: ")
     pole[my_step_x] = "  x  "
     print_pole()
     list_x.append(my_step_x)
@@ -83,13 +48,13 @@ def play1():
                 # print(f"x_x={x_x}")
     return list_x, pole, k_x, l_x, x_x
 
-
 def play2():
     global k_o, l_o, x_o
     k_o, l_o, x_o = 0, 0, 0
     my_step_o = 0
     while pole.get(my_step_o) != "  .  ":
-        my_step_o = input("Через запятую введите сторку и колонку, куда поставить o: ")
+        my_step_o = input(
+            "Через запятую введите сторку и колонку, куда поставить o: ")
     pole[my_step_o] = "  o  "
     print_pole()
     list_o.append(my_step_o)
@@ -112,22 +77,21 @@ def play2():
                 # print(f"x_o={x_o}")
     return list_o, pole, k_o, l_o, x_x
 
-
 def bot():
     global k_o, l_o, x_o
     k_o, l_o, x_o = 0, 0, 0
     my_step_o = 0
-    count=0
-    while pole.get(my_step_o) != "  .  " :
-        my_step_o=random.choice(list(pole))
+    count = 0
+    while pole.get(my_step_o) != "  .  ":
+        my_step_o = random.choice(list(pole))
         # print(my_step_o)
         for i in list_x:
-            if my_step_o[0]!=i[0] or my_step_o[2]!=i[2]:
+            if my_step_o[0] != i[0] or my_step_o[2] != i[2]:
                 break
-            elif my_step_o[0]==i[0] or my_step_o[2]==i[2]:
+            elif my_step_o[0] == i[0] or my_step_o[2] == i[2]:
                 break
             else:
-                my_step_o=0
+                my_step_o = 0
                 # print("step")
                 # count+=1
                 break
@@ -170,9 +134,9 @@ def step_play1():
             break
         if "  .  " not in pole.values():
             print("Ничья!!!)))")
-# print(pole)
+
 def step_play2():
-    pole["2,2"]="  o  "
+    pole["2,2"] = "  o  "
     list_o.append("2,2")
     print_pole()
     while "  .  " in pole.values():
@@ -189,17 +153,18 @@ def step_play2():
             break
         if "  .  " not in pole.values():
             print("Ничья!!!)))")
+
 while True:
     print("Кидаем монетку)))")
-    rnd=random.randint(0,2)
-    if rnd==0:
+    rnd = random.randint(0, 2)
+    if rnd == 0:
         print("Ваш ход!")
         step_play1()
     else:
         print("Первым ходит копьютер!")
         step_play2()
-    say=input("Продолжить- 1, закончить- 0:  ")
-    if say=="1":
+    say = input("Продолжить- 1, закончить- 0:  ")
+    if say == "1":
         continue
     else:
         break

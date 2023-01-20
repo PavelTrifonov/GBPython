@@ -7,12 +7,14 @@ while True:
     n = input("Введите число: ")
     if n == "":
         break
-    my_list = []
-    n = int(n)
-    for i in range(1, n+1):
-        my_list.append(round((1+1/i)**i, 2))
-    sum_numbers = 0
-    for i in my_list:
-        sum_numbers += i
-    print(f"Для n={n} -> {my_list}")
-    print(f"Сумма {sum_numbers}")
+    # my_list = []
+    # n = int(n)
+    # for i in range(1, n+1):
+    #     my_list.append(round((1+1/i)**i, 2))
+    my_list=list(round((1+1/i)**i, 2) for i in range(1, int(n)+1))
+    # sum_numbers = 0
+    # for i in my_list:
+    #     sum_numbers += i
+    sum_numbers=sum(my_list)
+    
+    print(f"Для n={n} -> {my_list}\nСумма {sum_numbers}")
