@@ -13,13 +13,68 @@ import sympy
 
 a,b,c,d,e=-12,-18,5,10,-30
 def func(x):
-    return a*x**4*np.sin(np.cos(x))-b*x**3+c*x**2 +d*x-e
-x=np.arange(-10,10,0.0001)
-print(x)
-for i in x:
-    if -0.1<func(i)<0.1:
-        print(func(i),i)
-sympy.nroots(func(x),x,-1,1)
-plt.plot(x,func(x),"b")
-plt.grid()
+    f=a*x**4*np.sin(np.cos(x))-b*x**3+c*x**2 +d*x-e
+    return f
 
+
+limit  =  20
+step  = 0.01
+step_acr = 0.000001
+line_style = '-'
+color = 'b'
+direct_up = True
+
+
+def switch_line():
+    global line_style
+    if line_style == '-':
+        line_style = '-.'
+    else:
+        line_style = '-'
+    return line_style
+
+def switch_color():
+    global color
+    if color == 'b':
+        color = 'r'
+    else:
+        color = 'b'
+    return color
+
+
+x = np.arange(-limit, limit + step, step)
+
+x_change = [(-limit, 'limit')]
+
+
+for i in range(len(x) - 1):
+    if func(x[i]) > 0 and func(x[i + 1]) < 0 or func(x[i]) < 0 and func(x[i + 1]) > 0:
+        x_acr = np.arange(x[i], x[i + 1] + step_acr, step_acr) 
+        for j in range(len(x_acr) - 1):
+            if func(x_acr[j]) > 0 and func(x_acr[j + 1]) < 0 or func(x_acr[j]) < 0 and func(x_acr[j + 1]) > 0:
+                x_change.append((x_acr[j], 'zero'))
+    if direct_up:
+        if func(x[i]) > func(x[i + 1]):
+            direct_up = False
+            x_change.append((x[i], 'dir'))
+    else:
+        if func(x[i]) < func(x[i + 1]):
+            direct_up = True
+            x_change.append((x[i], 'dir'))
+
+
+x_change.append((limit, 'limit'))
+
+
+for i in range(len(x_change) - 1):
+    cur_x = np.arange(x_change[i][0], x_change[i + 1][0] + step, step)
+    if x_change[i][1] == 'zero':
+        plt.plot(x_change[i][0], func(x_change[i][0]), 'go')
+        plt.rcParams['lines.linestyle'] = switch_line()
+        plt.plot(cur_x, func(cur_x), color)
+    else:
+        plt.plot(cur_x, func(cur_x), switch_color())
+
+
+plt.grid()
+plt.show()
